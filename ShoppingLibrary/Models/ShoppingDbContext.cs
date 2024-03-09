@@ -51,8 +51,8 @@ public partial class ShoppingDbContext : DbContext
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
             entity.Property(e => e.ShippedDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.CustomerId)
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Orders__Customer__4316F928");
         });
 
@@ -105,13 +105,13 @@ public partial class ShoppingDbContext : DbContext
             entity.Property(e => e.Comment).HasMaxLength(500);
             entity.Property(e => e.ReviewDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.Reviews)
-                .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__Reviews__Custome__4F7CD00D");
-
             entity.HasOne(d => d.Product).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK__Reviews__Product__4E88ABD4");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Reviews__Custome__4F7CD00D");
         });
 
         modelBuilder.Entity<Role>(entity =>
